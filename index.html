@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SSE Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: #FFF;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #output {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+    <script>
+        const eventSource = new EventSource('/events');
+
+        eventSource.onmessage = (event) => {
+            const output = document.getElementById('output');
+            const eventData = event.data;
+            output.innerHTML = 'Received: ' + eventData;
+        };
+
+        function sendEvent() {
+            fetch('/send-event', { method: 'POST' });
+        }
+    </script>
+</head>
+<body>
+    <button onclick="sendEvent()">Send Event</button>
+    <div id="output"></div>
+</body>
+</html>
