@@ -27,6 +27,7 @@ func main() {
 	})
 
 	http.HandleFunc("/send-event", func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(10 * time.Second)
 		eventData := fmt.Sprintf("Button clicked at %s", time.Now().Format("2006-01-02 15:04:05"))
 		eventChan <- eventData
 		w.WriteHeader(http.StatusOK)
